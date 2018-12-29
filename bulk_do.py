@@ -14,12 +14,12 @@ def rename_archive(option):
 			os.rename(ext, re.sub('(.cbr$)', ".rar", ext))			
 
 #Replaces string with another
-def rename_filename(word, replacement):
+def rename_filename(word, replacement): #Better up with regex
 	for ext in os.listdir("."):
 		os.rename(ext, ext.replace(word, replacement).strip())
 
 #Creates new directory, and moves files by name
-def move_file(folder_name, file_name):		
+def move_file(folder_name, file_name):	   	
 	os.mkdir(os.getcwd() + "\\" + folder_name)
 	new_path = os.getcwd() + "\\" + folder_name
 
