@@ -31,7 +31,6 @@ def rename_filename(word, replacement):
 def move_file(folder_name, file_name):		
 	os.mkdir(os.getcwd() + "\\" + folder_name)
 	new_path = os.getcwd() + "\\" + folder_name
-
 	for files in os.listdir("."):
 		if files.startswith(file_name):
 			shutil.move(files, new_path)
