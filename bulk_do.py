@@ -1,5 +1,11 @@
 import re, shutil, os
 
+"""
+Automates regular tasks I do frequently.
+
+version: v.1.1
+"""
+
 #Renames  Zip and Rar extensions to their 
 #Comic Book extension
 def rename_archive(option):
@@ -12,21 +18,23 @@ def rename_archive(option):
 			os.rename(ext, re.sub('(.cbz$)', ".zip", ext))
 		elif option == '4':
 			os.rename(ext, re.sub('(.cbr$)', ".rar", ext))			
-
 #Replaces string with another
-def rename_filename(word, replacement): #Better up with regex
+def rename_file_section(word, replacement):
 	for ext in os.listdir("."):
-		os.rename(ext, ext.replace(word, replacement).strip())
-
+		os.rename(ext, re.sub(r"%s.*?" % word, replacement, ext, count=2))
+#renames entire filename.  word must be unique to one file in dir
+def rename_filename(word, replacement):
+	for ext in os.listdir("."):
+		if word in ext:
+			os.rename(ext, replacement)
 #Creates new directory, and moves files by name
-def move_file(folder_name, file_name):	   	
+def move_file(folder_name, file_name):		
 	os.mkdir(os.getcwd() + "\\" + folder_name)
 	new_path = os.getcwd() + "\\" + folder_name
 
 	for files in os.listdir("."):
 		if files.startswith(file_name):
 			shutil.move(files, new_path)
-
 
 print('=================================')
 print('Directory: ' + os.getcwd())    #Important. Changes cannot be reverted.
@@ -45,10 +53,19 @@ while option != '5':
 		rename_archive(option)
 	elif option == '2':
 		print('\t\nCHANGE FILENAME')
-		print('=====================')
-		word = input('Word to replace: ')
-		replacement = input('Replace ' + word + ' with: ').strip()
-		rename_filename(word, replacement)
+		print('================================')
+		print('1) Rename Section of filename\n' + 
+		      '2) Rename Entire filename')
+		print('--------------------------------')
+		select = input('Select: ')
+		if select != '1' and select != '2':
+			continue
+		word = input('Find File: ')
+		replacement = input('Replacement: ')
+		if select == '1':
+			rename_file_section(word, replacement)
+		elif select == '2':
+			rename_filename(word, replacement) #word must be unique to file
 	elif option == '3':
 		print('\t\nMOVE FILES')
 		print('===================')
@@ -64,4 +81,3 @@ while option != '5':
 	print('1) Rename extensions\n2) Rename Files\n3) Move Files\n4) Show Direcotry\n5) Exit')
 	print('--------------------------------')
 	option = input('Select: ')
-		
