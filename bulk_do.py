@@ -18,17 +18,15 @@ def rename_archive(option):
 			os.rename(ext, re.sub('(.cbz$)', ".zip", ext))
 		elif option == '4':
 			os.rename(ext, re.sub('(.cbr$)', ".rar", ext))			
-
 #Replaces string with another
 def rename_file_section(word, replacement):
 	for ext in os.listdir("."):
 		os.rename(ext, re.sub(r"%s.*?" % word, replacement, ext, count=2))
-
+#renames entire filename.  word must be unique to one file in dir
 def rename_filename(word, replacement):
 	for ext in os.listdir("."):
 		if word in ext:
 			os.rename(ext, replacement)
-
 #Creates new directory, and moves files by name
 def move_file(folder_name, file_name):		
 	os.mkdir(os.getcwd() + "\\" + folder_name)
