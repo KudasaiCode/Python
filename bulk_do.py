@@ -3,9 +3,8 @@ import re, shutil, os
 """
 Automates regular tasks I do frequently.
 
-version: v.1.1
+version: ver 1.2
 """
-
 #Renames  Zip and Rar extensions to their 
 #Comic Book extension
 def rename_archive(option):
@@ -17,24 +16,27 @@ def rename_archive(option):
 		elif option == '3':
 			os.rename(ext, re.sub('(.cbz$)', ".zip", ext))
 		elif option == '4':
-			os.rename(ext, re.sub('(.cbr$)', ".rar", ext))			
+			os.rename(ext, re.sub('(.cbr$)', ".rar", ext))				
 #Replaces string with another
 def rename_file_section(word, replacement):
 	for ext in os.listdir("."):
 		os.rename(ext, re.sub(r"%s.*?" % word, replacement, ext, count=2))
-#renames entire filename.  word must be unique to one file in dir
+#Renames the entire name
 def rename_filename(word, replacement):
 	for ext in os.listdir("."):
 		if word in ext:
 			os.rename(ext, replacement)
-#Creates new directory, and moves files by name
-def move_file(folder_name, file_name):		
-	os.mkdir(os.getcwd() + "\\" + folder_name)
-	new_path = os.getcwd() + "\\" + folder_name
+#Creates new directory, and moves files indicated by keyword
+def move_file(folder_name, file_name):
+	moved_files = []		
+	os.mkdir(os.path.join(os.getcwd(), folder_name))
 	for files in os.listdir("."):
-		if files.startswith(file_name):
-			shutil.move(files, new_path)
-
+		if file_name in files:
+			shutil.move(files, os.path.join(os.getcwd(), folder_name))
+			moved_files.append(files)
+	print("\nSuccesfully moved files to " + os.path.join(os.getcwd(), folder_name) +
+		        "\n> " + "\n> ".join(moved_files))
+	
 print('=================================')
 print('Directory: ' + os.getcwd())    #Important. Changes cannot be reverted.
 print('=================================')
@@ -69,7 +71,7 @@ while option != '5':
 		print('\t\nMOVE FILES')
 		print('===================')
 		folder_name = input('New Folder ' + os.getcwd() + '\\')
-		file_name = input('Files to move to ' + os.getcwd() + '\\' + folder_name + ': ')
+		file_name = input('Files to move to ' + os.path.join(os.getcwd(), folder_name) + ': ')
 		move_file(folder_name, file_name)
 	elif option == '4':
 		print('\n\n' + os.getcwd() + '\n\n' + str(os.listdir(".")))
