@@ -16,7 +16,7 @@ def rename_archive(option):
 		elif option == '3':
 			os.rename(ext, re.sub('(.cbz$)', ".zip", ext))
 		elif option == '4':
-			os.rename(ext, re.sub('(.cbr$)', ".rar", ext))			
+			os.rename(ext, re.sub('(.cbr$)', ".rar", ext))				
 #Replaces string with another
 def rename_file_section(word, replacement):
 	for ext in os.listdir("."):
@@ -35,8 +35,8 @@ def move_file(folder_name, file_name):
 			shutil.move(files, os.path.join(os.getcwd(), folder_name))
 			moved_files.append(files)
 	print("\nSuccesfully moved files to " + os.path.join(os.getcwd(), folder_name) +
-		  "\n> " + "\n> ".join(moved_files))
-
+		        "\n> " + "\n> ".join(moved_files))
+	
 print('=================================')
 print('Directory: ' + os.getcwd())    #Important. Changes cannot be reverted.
 print('=================================')
