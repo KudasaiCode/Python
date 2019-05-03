@@ -1,4 +1,4 @@
-import re, shutil, os
+import re, shutil, os, zipfile
 
 """
 Automates regular tasks I do frequently.
@@ -21,11 +21,13 @@ def rename_archive(option):
 def rename_file_section(word, replacement):
 	for ext in os.listdir("."):
 		os.rename(ext, re.sub(r"%s.*?" % word, replacement, ext, count=2))
+		
 #Renames the entire name
 def rename_filename(word, replacement):
 	for ext in os.listdir("."):
 		if word in ext:
 			os.rename(ext, replacement)
+			
 #Creates new directory, and moves files indicated by keyword
 def move_file(folder_name, file_name):
 	moved_files = []		
@@ -36,6 +38,9 @@ def move_file(folder_name, file_name):
 			moved_files.append(files)
 	print("\nSuccesfully moved files to " + os.path.join(os.getcwd(), folder_name) +
 		        "\n> " + "\n> ".join(moved_files))
+		       
+
+  
 	
 print('=================================')
 print('Directory: ' + os.getcwd())    #Important. Changes cannot be reverted.
@@ -74,11 +79,13 @@ while option != '5':
 		file_name = input('Files to move to ' + os.path.join(os.getcwd(), folder_name) + ': ')
 		move_file(folder_name, file_name)
 	elif option == '4':
-		print('\n\n' + os.getcwd() + '\n\n' + str(os.listdir(".")))
+		print('\n\n' + os.getcwd(), '\n')
+		for files in os.listdir("."):
+			print(files)
 	else:
 		print('Invalid Option')
 	
 	print('\n=================================')
-	print('1) Rename extensions\n2) Rename Files\n3) Move Files\n4) Show Direcotry\n5) Exit')
+	print('1) Rename extensions\n2) Rename Files\n3) Move Files\n4) Show Directory\n5) Exit')
 	print('--------------------------------')
 	option = input('Select: ')
